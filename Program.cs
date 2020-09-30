@@ -4,7 +4,7 @@ namespace FunctionBuilder
 {
     class Program
     {
-        static double GetY(double x)            //получить F(x)
+        static double GetY(double x)            //Сама функция (вычисляет F(x))
         {
             return Math.Round(Math.Sqrt(Math.Abs(x))*Math.Sin(x*(Math.Pow(-1,Math.Round(x))-1)))+x*(Math.Pow(-1,Math.Round(x))+1);
         }
@@ -34,7 +34,7 @@ namespace FunctionBuilder
 
         static void DrawResult(double step, double xStart, double xEnd)    //Отрисовка результата
         {
-            static int DigitSize(double d)   //Сколько символов в числе
+            static int DigitSize(double d)            //Сколько символов в числе
             {
                 return Convert.ToString(d).Length;
             }
@@ -56,8 +56,10 @@ namespace FunctionBuilder
             {
                 y = GetY(x);
                 if (DigitSize(y) > maxSize) { maxSize = DigitSize(y); }
+                if (DigitSize(x) > maxSize) { maxSize = DigitSize(x); }
                 x += step;
             } while (x <= xEnd);
+            maxSize += 2;
 
             //Отрисовка
             Console.Write('┌');
@@ -110,13 +112,13 @@ namespace FunctionBuilder
         static void Main(string[] args)
         {
             double step, xStart, xEnd;
-            Console.WriteLine("Ваша функция: y = [sqrt(|x|)*sin(x*((-1)^[x]-1))] + x((-1)^[x]+1)");
+            Console.WriteLine("Функция по умолчанию: Y = [sqrt(|X|)*sin(X*((-1)^[X]-1))] + X((-1)^[X]+1)");
 
             Console.Write("Введите шаг: ");
             step = GetDouble();
-            Console.WriteLine("Ведите Х начальное: ");
+            Console.Write("Ведите Х начальное: ");
             xStart = GetDouble();
-            Console.WriteLine("Ведите Х конечное: ");
+            Console.Write("Ведите Х конечное: ");
             xEnd = GetDouble();
 
             if (xStart < xEnd) DrawResult(step, xStart, xEnd); else DrawResult(step, xEnd, xStart);
