@@ -13,23 +13,16 @@ namespace FunctionBuilder
         {
             string str;
             bool repeat;
+            double output;
             do
             {
                 str = Console.ReadLine().Replace('.', ',');
-                repeat = false;
 
-                for (int i = 0; i < str.Length; i++)
-                {
-                    if (!(Char.IsDigit(str, i) || str[i] == ',')) 
-                    { 
-                        repeat = true; 
-                        Console.Write("Введите корректное число: "); 
-                        break; 
-                    }
-                }
+                repeat = !Double.TryParse(str, out output);
+                if (repeat) Console.Write("Введите корректное число (кроме 0): ");
             } while (repeat);
 
-            return Convert.ToDouble(str);
+            return output;
         }
 
         static void DrawResult(double step, double xStart, double xEnd)    //Отрисовка результата
@@ -58,7 +51,7 @@ namespace FunctionBuilder
                 if (DigitSize(y) > maxSize) { maxSize = DigitSize(y); }
                 if (DigitSize(x) > maxSize) { maxSize = DigitSize(x); }
                 x += step;
-            } while (x <= xEnd);
+            } while ((step > 0 && x <= xEnd) || (step < 0 && x >= xEnd));
             maxSize += 2;
 
             //Отрисовка
@@ -100,7 +93,7 @@ namespace FunctionBuilder
                 Console.WriteLine('│');
 
                 x += step;
-            } while (x <= xEnd);
+            } while ((step > 0 && x <= xEnd) || (step < 0 && x >= xEnd));
 
             Console.Write('└');
             DrawMark('─', maxSize);
@@ -115,13 +108,19 @@ namespace FunctionBuilder
             Console.WriteLine("Функция по умолчанию: Y = [sqrt(|X|)*sin(X*((-1)^[X]-1))] + X((-1)^[X]+1)");
 
             Console.Write("Введите шаг: ");
-            step = GetDouble();
+            do
+            {
+                step = GetDouble();
+                if (step == 0) { Console.Write("Зачем ты это делаешь? Попробуй снова: "); }
+            } while (step == 0);
             Console.Write("Ведите Х начальное: ");
             xStart = GetDouble();
             Console.Write("Ведите Х конечное: ");
             xEnd = GetDouble();
 
-            if (xStart < xEnd) DrawResult(step, xStart, xEnd); else DrawResult(step, xEnd, xStart);
+            if ((xStart < xEnd && step > 0) || (xStart > xEnd && step < 0)) DrawResult(step, xStart, xEnd); 
+            else { DrawResult(step, xEnd, xStart);
+                   Console.WriteLine("Начальное и конечное положение заменены");           }
 
         }
     }
