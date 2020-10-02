@@ -13,16 +13,19 @@ namespace FunctionBuilder
         {
             string str;
             bool repeat;
-            double output;
+            double output1, output2;
             do
             {
-                str = Console.ReadLine().Replace('.', ',');
+                str = Console.ReadLine();
 
-                repeat = !Double.TryParse(str, out output);
-                if (repeat) Console.Write("Введите корректное число (кроме 0): ");
+                str = str.Replace('.', ',');
+                repeat = !Double.TryParse(str, out output1);
+                str = str.Replace(',', '.');
+                repeat = !Double.TryParse(str, out output2) && repeat;
+                if (repeat) Console.Write("Введите корректное число: ");
             } while (repeat);
-
-            return output;
+            if (output1 == output2) output1 = 0;
+            return output1 + output2;
         }
 
         static void DrawResult(double step, double xStart, double xEnd)    //Отрисовка результата
