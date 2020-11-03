@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -75,6 +76,7 @@ namespace FunctionBuilder
             List<string> firstList = new List<string>();
             List<string> secondList = new List<string>();
             string[] output;
+            bool isDebugEnabled = true;
 
             for (int i = 0; i < pInput.Length; i++)
             {
@@ -110,6 +112,28 @@ namespace FunctionBuilder
                         }
                     }
                     secondList.Add(pInput[i]);
+                }
+
+                if (isDebugEnabled)
+                {
+                    for (int ii = 0; ii < pInput.Length; ii++)
+                    {
+                        if (ii == i) Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(pInput[ii] + " ");
+                        Console.ResetColor();
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+
+                    string local = "";
+                    for (int ii = 0; ii < firstList.Count; ii++) local += firstList[ii] + " ";
+                    Console.WriteLine("Первая строка: " + local);
+                    local = "";
+                    for (int ii = 0; ii < secondList.Count; ii++) local += secondList[ii] + " ";
+                    Console.WriteLine("Вторая строка: " + local);
+
+                    Console.ReadKey(true);
+                    Console.Clear();
                 }
             }
 
