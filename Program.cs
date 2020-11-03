@@ -52,7 +52,7 @@ namespace FunctionBuilder
 
             return output;
         }
-
+         
         //Отрисовка результата
         static void DrawResult(double step, double xStart, double xEnd)    
         {
