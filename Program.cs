@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 
 namespace FunctionBuilder
 {
@@ -6,18 +8,46 @@ namespace FunctionBuilder
     {
         static void Main(string[] args)
         {
-            double step, xStart, xEnd;
-            Console.WriteLine("Функция по умолчанию: Y = [sqrt(|X|)*sin(X*((-1)^[X]-1))] + X((-1)^[X]+1)");
-
-            step = GetDouble("Введите шаг: ");
-            xStart = GetDouble("Ведите Х начальное: ");
-            xEnd = GetDouble("Ведите Х конечное: ");
-
-            if ((xStart < xEnd && step > 0) || (xStart > xEnd && step < 0)) DrawResult(step, xStart, xEnd);
-            else
+            if (IsFileCorrect())
             {
-                DrawResult(step, xEnd, xStart);
-                Console.WriteLine("Начальное и конечное положение заменены");
+                string[] input = ReadFile();
+
+                string formula = input[0];
+                double step = Convert.ToDouble(input[1]);
+                double xStart = Convert.ToDouble(input[2]);
+                double xEnd = Convert.ToDouble(input[3]);
+
+                File.WriteAllText("../../../output.txt", FinalCalculations(input));
+            }
+        }
+        static string[] ReadFile()
+        {
+            string[] output = new string[4];
+            int i = 0;
+            foreach (string element in File.ReadLines("../../../input.txt"))
+            {
+                output[i] = element;
+                i++;
+            }
+
+            return output;
+        }
+
+        static bool IsFileCorrect()
+        {
+            try
+            {
+                if (File.ReadLines("../../../input.txt").Count() == 4) return true;
+                else
+                {
+                    Console.WriteLine("Введите в файле 4 строки: формула, шаг, Х начальное, Х конечное.");
+                    return false;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Файл не обнаружен (поместите файл input.txt в папку с программой)");
+                return false;
             }
         }
 
