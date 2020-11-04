@@ -109,14 +109,24 @@ namespace FunctionBuilder
                     preOutput.Add("");
                     for (; i < input.Length; i++)
                     {
-                        if (Char.IsDigit(input[i]) || input[i] == '.' || (input[i] == ',' && Char.IsDigit(input[i + 1])))
+                        if (Char.IsDigit(input[i]) || input[i] == '.')
+                            
                         {
                             preOutput[preOutput.Count - 1] += input[i];
                         }
                         else
                         {
-                            i--;
-                            break;
+                            if (input[i] == 'E' && (input[i + 1] == '+' || input[i + 1] == '-'))
+                            {
+                                preOutput[preOutput.Count - 1] += input[i];
+                                preOutput[preOutput.Count - 1] += input[i + 1];
+                                i++;
+                            }
+                            else
+                            {
+                                i--;
+                                break;
+                            }
                         }
                     }
                 }
@@ -134,7 +144,7 @@ namespace FunctionBuilder
                     preOutput.Add(Convert.ToString(input[i]));
                 }
                 else
-                if (input[i] != ' ' && input[i] != ',')
+                if (input[i] != ' ' && input[i] != ',' && input[i] != ';')
                 {
                     string local = "";
                     for (; i < input.Length; i++)

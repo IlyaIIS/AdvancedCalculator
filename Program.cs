@@ -18,7 +18,10 @@ namespace FunctionBuilder
                 double xStart = Convert.ToDouble(input[2].Replace(',', '.'));
                 double xEnd = Convert.ToDouble(input[3].Replace(',', '.'));
 
-                WriteResult(formula, step, xStart, xEnd);
+                if (step > 0 == xStart < xEnd)
+                    WriteResult(formula, step, xStart, xEnd);
+                else
+                    WriteResult(formula, step, xEnd, xStart);
             }
         }
 
@@ -82,7 +85,7 @@ namespace FunctionBuilder
                     (int)Math.Ceiling((double)(maxSize - DigitSize(x)) / 2), 
                     (int)Math.Ceiling((double)(maxSize - DigitSize(y)) / 2), text);
 
-                x += step;
+                x = Convert.ToDouble(Convert.ToDecimal(x) + Convert.ToDecimal(step));
             } while ((step > 0 && x <= xEnd) || (step < 0 && x >= xEnd));
 
             text = WriteBorder('─', '└', '┴', '┘', maxSize, text);
