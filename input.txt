@@ -1,4 +1,4 @@
-round(sin(x)*5)
+round(sin(x)*(5+x))
 0,1
 -10
 10

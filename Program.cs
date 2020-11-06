@@ -63,7 +63,6 @@ namespace FunctionBuilder
             double x, y;
             int maxSize = GetMaxSizeXY(formula, 2, xStart, step, xEnd);
             string text = "";
-            OPZ opz = new OPZ();
 
             //Отрисовка
             text = WriteBorder('─', '┌', '┬', '┐', maxSize, text);
@@ -94,8 +93,7 @@ namespace FunctionBuilder
         }
         static double GetY(string formula, double x)
         {
-            OPZ opz = new OPZ();
-            return opz.Calculate(opz.ParseExpression(formula.Replace("x", Convert.ToString(x))));
+            return OPZ.Calculate(OPZ.ParseExpression(formula.Replace("x", Convert.ToString(x))));
         }
 
         static string WriteBorder(char char0, char char1, char char2, char char3, int maxSize, string text)

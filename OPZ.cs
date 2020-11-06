@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace FunctionBuilder
 {
-    class OPZ
+    static class OPZ
     {
         //Константы
         static string[] signsList = { "+", "-", "*", "/", "^", "(", ")", "sin", "log", "!", "round" };
@@ -24,7 +24,7 @@ namespace FunctionBuilder
         };
 
         //Получить польскую запсь
-        public List<string> ParseExpression(string input)
+        static public List<string> ParseExpression(string input)
         {
             string[] pInput = ParseInput(input);
             List<string> firstList = new List<string>();
@@ -163,7 +163,7 @@ namespace FunctionBuilder
         }
         
         //Калькулятор
-        public double Calculate(List<string> input)
+        static public double Calculate(List<string> input)
         {
             for (int i = 0; i < input.Count; i++)
             {
